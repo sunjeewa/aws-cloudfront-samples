@@ -152,18 +152,3 @@ def get_security_groups_for_update(client, security_group_tag):
     response = client.describe_security_groups(Filters=filters)
 
     return response['SecurityGroups']
-
-def main():
-    # Load the ip ranges from the url
-    ip_ranges = json.loads(get_ip_groups_json("https://ip-ranges.amazonaws.com/ip-ranges.json","dea0f02caba5927823ce09763ad5ca87" ))
-
-    # extract the service ranges
-    cf_ranges = get_ranges_for_service(ip_ranges, SERVICE)
-
-    # update the security groups
-    result = update_security_groups(cf_ranges)
-
-    return result
-
-if __name__ == '__main__':
-    main()

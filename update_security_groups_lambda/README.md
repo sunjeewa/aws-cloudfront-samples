@@ -1,12 +1,11 @@
 # update-security-groups
 
-A Lambda function for updating the **cloudfront** EC2 security group ingress rules
-with the CloudFront IP range changes.
+A Lambda function for updating the EC2 security group rules to allow egress traffic to Amazon IP Range
 
 
 ## Security Group
 
-This Lambda function updates EC2 security groups tagged with `Name: cloudfront` and `AutoUpdate: true` and a `Protocol` tag with value `http` or `https`.
+This Lambda function updates EC2 security groups tagged with `AWSAPI: allow`.
 
 
 ## Event Source
@@ -27,8 +26,8 @@ To be able to make sufficient use of this Lambda function, you will require a ro
         {
             "Effect": "Allow",
             "Action": [
-                "ec2:AuthorizeSecurityGroupIngress",
-                "ec2:RevokeSecurityGroupIngress"
+                "ec2:AuthorizeSecurityGroupEgress",
+                "ec2:RevokeSecurityGroupEgress"
             ],
             "Resource": "arn:aws:ec2:[region]:[account-id]:security-group/*"
         },
