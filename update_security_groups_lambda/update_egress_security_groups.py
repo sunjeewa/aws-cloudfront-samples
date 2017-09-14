@@ -71,9 +71,12 @@ def update_security_groups(new_ranges):
     result = list()
     https_updated = 0
     for group in https_group:
-        if update_security_group(client, group, new_ranges, EGRESS_PORTS['Https']):
-            https_updated += 1
-            result.append('Updated ' + group['GroupId'])
+        try:
+            if update_security_group(client, group, new_ranges, EGRESS_PORTS['Https']):
+                https_updated += 1
+                result.append('Updated ' + group['GroupId'])
+        except Exception as error:
+            print("[Error] %s" %(error))
 
     result.append('Updated ' + str(https_updated) + ' of ' + str(len(https_group)) + ' Https SecurityGroups')
 
